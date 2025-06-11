@@ -17,14 +17,6 @@
             required
         />
 
-        <!-- Password -->
-        <flux:input
-            wire:model="password"
-            :label="__('Password')"
-            type="password"
-            placeholder="Enter password"
-            required
-        />
 
         <!-- Submit Button -->
         <flux:button type="submit" variant="danger" class="w-full">
