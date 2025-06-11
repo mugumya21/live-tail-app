@@ -18,7 +18,9 @@
 
     </head>
    <body>
-    <h1 class="text-3xl font-bold underline">Hello Jordan</h1>
-    @livewire('PointOfSale')
+
+            @livewire('auth.login')
+
+    </div>
    </body>
 </html>
