@@ -4,11 +4,13 @@ namespace App\Livewire\CRM;
 
 use Livewire\Component;
 use App\Models\Customer as customerModel;
+use Livewire\WithPagination;
 
 class Customer extends Component
 {
     public $name = "";
     public $email = "";
+    public $search = "";
 
     public function addCustomer()
     {
@@ -24,7 +26,12 @@ class Customer extends Component
         flash()->success('Customer created successfully');
     }
      public function render()
-    {
-        return view('livewire.c-r-m.customer');
+    {   $customers = customerModel::where('name','LIke', "%{$this->search}%")->paginate(2);
+        return view('livewire.c-r-m.customer', [
+            'customers'=> $customers
+
+        ]);
     }
+
+
 }
