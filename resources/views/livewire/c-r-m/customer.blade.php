@@ -1,47 +1,61 @@
 <div class="max-w-5xl mx-auto mt-10 p-6 bg-white rounded-2xl shadow-md dark:bg-zinc-900">
-    <div class="flex flex-col md:flex-row gap-10">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
         <!-- Left: Form -->
-        <div class="md:w-1/2">
+        <div class="">
             <form wire:submit.prevent="addCustomer" class="flex flex-col gap-4">
                 <!-- Name -->
                 <flux:input
                     type="text"
-                    :label="__('User name')"
+                    :label="__('Name')"
                     wire:model="name"
-                    placeholder="Enter your name"
+                    placeholder="Enter the name of the customer"
                     required />
+
+                <!-- phone -->
+                <flux:input
+                    wire:model="phone"
+                    :label="__('phone')"
+                    type="text"
+                    placeholder="Enter phone number"
+                    required />
+
 
                 <!-- Email -->
                 <flux:input
-                    wire:model="email"
+                    type="text"
                     :label="__('Email')"
-                    type="email"
-                    placeholder="Enter email"
+                    wire:model="email"
+                    placeholder='Enter the email'
                     required />
 
+
                 <!-- Submit Button -->
-                <flux:button type="submit" variant="danger" class="w-full">
+                <flux:button type="submit" variant="primary" class="w-full">
                     {{ __('Add Customer') }}
                 </flux:button>
             </form>
         </div>
 
         <!-- Right: Customer List -->
-        <div class="md:w-1/2 space-y-4">
+        <div class="">
             <h2 class="text-lg font-semibold mb-2 text-white dark:text-zinc-100">Customer List</h2>
 
-                    <input type="text"  wire:model.live="search" placeholder="search...">
+                    <input type="text"  wire:model.live.debounce="search" placeholder="search...">
 
             </search>
             @forelse ($customers as $customer)
                 <div class="p-4 border border-zinc-200 dark:border-zinc-700 rounded-md">
                     <p><strong>Name:</strong> {{ $customer->name }}</p>
+                    <p><strong>Phone:</strong> {{ $customer->phone }}</p>
                     <p><strong>Created at:</strong> {{ $customer->created_at }}</p>
                 </div>
             @empty
                 <p class="text-gray-500 dark:text-gray-400">No Customer found</p>
             @endforelse
-            {{ $customers->links()}}
+            <div class="mt-2">
+                            {{ $customers->links()}}
+
+            </div>
         </div>
     </div>
 </div>

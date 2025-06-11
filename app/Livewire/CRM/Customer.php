@@ -3,34 +3,45 @@
 namespace App\Livewire\CRM;
 
 use Livewire\Component;
-use App\Models\Customer as customerModel;
+use App\Models\Customer as CustomerModel;
 use Livewire\WithPagination;
 
 class Customer extends Component
 {
-    public $name = "";
-    public $email = "";
-    public $search = "";
+    use WithPagination;
+    public $name;
+    public $email;
+    public $search;
+    public $phone;
 
     public function addCustomer()
     {
         $validated = $this->validate([
 
                 'name'=>'required|min:5',
-                'email'=>'required|unique:customers',
+                'email'=>'unique:customers',
+                'phone'=>'required|unique:customers|min:5',
             ]
 
         );
-        customerModel::create($validated);
-        $this->reset(['name', 'email']);
+        CustomerModel::create($validated);
+        $this->reset(['name', 'email', 'phone']);
         flash()->success('Customer created successfully');
     }
+
+
+
      public function render()
-    {   $customers = customerModel::where('name','LIke', "%{$this->search}%")->paginate(2);
+    {   $customers = CustomerModel::where('name','LIke', "%{$this->search}%")->paginate(2);
         return view('livewire.c-r-m.customer', [
             'customers'=> $customers
 
         ]);
+    }
+
+    public function updatedSearch()
+    {
+        $this->resetPage();
     }
 
 
