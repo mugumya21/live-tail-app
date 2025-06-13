@@ -38,6 +38,7 @@
 
         <!-- Right: Customer List -->
         <div class="">
+            <h2> {{ $customers_count }} Customers</h2>
             <h2 class="text-lg font-semibold mb-2 text-white dark:text-zinc-100">Customer List</h2>
 
                     <input type="text"  wire:model.live.debounce="search" placeholder="search...">

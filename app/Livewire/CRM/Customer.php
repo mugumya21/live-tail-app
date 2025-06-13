@@ -5,14 +5,39 @@ namespace App\Livewire\CRM;
 use Livewire\Component;
 use App\Models\Customer as CustomerModel;
 use Livewire\WithPagination;
+use Illuminate\Support\Facades\Redis;
 
 class Customer extends Component
 {
     use WithPagination;
+
     public $name;
     public $email;
     public $search;
     public $phone;
+
+
+
+    public function render()
+    {
+        $customers = CustomerModel::where('name', 'like', "%{$this->search}%")->paginate(2);
+
+        Redis::set('customers', json_encode($customers));
+        Redis::set('customers_count', $customers->total());
+
+        $customerCount = Redis::get('customers_count');
+
+        return view('livewire.c-r-m.customer', [
+            'customers' => $customers,
+            'customers_count' => $customerCount
+        ]);
+    }
+
+    public function updatedSearch()
+    {
+        $this->resetPage();
+    }
+
 
     public function addCustomer()
     {
@@ -31,18 +56,7 @@ class Customer extends Component
 
 
 
-     public function render()
-    {   $customers = CustomerModel::where('name','LIke', "%{$this->search}%")->paginate(2);
-        return view('livewire.c-r-m.customer', [
-            'customers'=> $customers
 
-        ]);
-    }
-
-    public function updatedSearch()
-    {
-        $this->resetPage();
-    }
 
 
 }
