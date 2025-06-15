@@ -1,5 +1,5 @@
 <div class="max-w-5xl mx-auto mt-10 p-6 bg-white rounded-2xl shadow-md dark:bg-zinc-900">
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+    <div class="grid grid-cols-1 md:grid-cols-2">
         <!-- Left: Form -->
         <div>
             <form wire:submit.prevent="addInCart" class="flex flex-col gap-4">

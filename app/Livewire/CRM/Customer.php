@@ -6,6 +6,7 @@ use Livewire\Component;
 use App\Models\Customer as CustomerModel;
 use Livewire\WithPagination;
 use Illuminate\Support\Facades\Redis;
+use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\CustomerExport;
 
@@ -53,7 +54,13 @@ class Customer extends Component
             ]
 
         );
-        CustomerModel::create($validated);
+        DB::transaction(function() use (&$validated){
+
+            $customer = CustomerModel::create($validated);
+
+        });
+
+        return response()->json(['message' => 'Email sent successfully!']);
         $this->reset(['name', 'email', 'phone']);
         flash()->success('Customer created successfully');
     }
