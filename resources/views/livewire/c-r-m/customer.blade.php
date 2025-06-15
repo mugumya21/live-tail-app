@@ -40,8 +40,11 @@
         <div class="">
             <h2> {{ $customers_count }} Customers</h2>
             <h2 class="text-lg font-semibold mb-2 text-white dark:text-zinc-100">Customer List</h2>
-
+            <div class="grid grid-cols-2">
+                <a href="" wire:click.prevent="export" class="bg-gray-800 text-white rounded">Export</a>
                     <input type="text"  wire:model.live.debounce="search" placeholder="search...">
+
+            </div>
 
             </search>
             @forelse ($customers as $customer)

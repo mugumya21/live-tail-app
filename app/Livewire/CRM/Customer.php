@@ -6,6 +6,8 @@ use Livewire\Component;
 use App\Models\Customer as CustomerModel;
 use Livewire\WithPagination;
 use Illuminate\Support\Facades\Redis;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\CustomerExport;
 
 class Customer extends Component
 {
@@ -16,7 +18,9 @@ class Customer extends Component
     public $search;
     public $phone;
 
-
+    public function export(){
+        return Excel::download(new CustomerExport, 'customer.xlsx');
+    }
 
     public function render()
     {
