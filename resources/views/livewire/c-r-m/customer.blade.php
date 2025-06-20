@@ -41,18 +41,62 @@
             <h2> {{ $customers_count }} Customers</h2>
             <h2 class="text-lg font-semibold mb-2 text-white dark:text-zinc-100">Customer List</h2>
             <div class="grid grid-cols-2">
-                <a href="" wire:click.prevent="export" class="bg-gray-800 text-white rounded">Export</a>
-                    <input type="text"  wire:model.live.debounce="search" placeholder="search...">
+               <div class="flex items-center space-x-4 p-4">
+                <!-- Search Input -->
+                <input
+                    type="text"
+                    class="border border-gray-300 rounded px-3 py-1 focus:outline-none focus:ring focus:border-blue-400"
+                    wire:model.live.debounce.500ms="search"
+                    placeholder="Search..." >
+
+                <!-- Export Button -->
+                <a
+                    href="#"
+                    wire:click.prevent="export"
+                    class="bg-gray-800 text-white rounded px-4 py-1 hover:bg-gray-700 transition"
+                >
+                    Export
+                </a>
+            </div>
+
 
             </div>
 
             </search>
             @forelse ($customers as $customer)
-                <div class="p-4 border border-zinc-200 dark:border-zinc-700 rounded-md">
+            <div  wire:key="customer{{ $customer->id }}" class="grid grid-cols-2 p-4 border border-zinc-200 dark:border-zinc-700 rounded-md">
+                <div class="">
+                    @if ($editCustomerId ===  $customer->id)
+
+
+                    {{--   x-on:blur="$wire.save()" this is alpine that listens to all events and clicks  --}}
+                <input
+                    type="text" wire:model="editCustomerName" x-on:blur="$wire.save()"
+                    class="border border-gray-300 rounded px-3 py-1 focus:outline-none focus:ring focus:border-blue-400"
+                     >
+
+                    @else
                     <p><strong>Name:</strong> {{ $customer->name }}</p>
+
+                    @endif
+
                     <p><strong>Phone:</strong> {{ $customer->phone }}</p>
                     <p><strong>Created at:</strong> {{ $customer->created_at }}</p>
+
+
                 </div>
+                    <div>
+                        <button  wire:click="edit({{ $customer->id}})" class="rounded text-white bg-green-500 px-4 py-1 m-3">
+                        <i class="fas fa-edit"></i> Edit
+                        </button>
+
+                        <!-- Delete Button -->
+                         <button wire:click="delete({{ $customer->id}})"  class="rounded text-white bg-red-500 px-4 py-1 m-3">
+                        <i class="fas fa-trash"></i> Delete
+                        </button>
+                     </div>
+            </div>
+
             @empty
                 <p class="text-gray-500 dark:text-gray-400">No Customer found</p>
             @endforelse

@@ -2,7 +2,7 @@
     <!-- Platform -->
     <flux:navlist.group class="grid">
         <flux:navlist.item icon="home" href="#" wire:navigate>Dashboard</flux:navlist.item>
-        <flux:navlist.item icon="shopping-cart" href="#">Make a Sale</flux:navlist.item>
+        <flux:navlist.item icon="shopping-cart" href="{{ route('sales.create') }}">Make a Sale</flux:navlist.item>
     </flux:navlist.group>
 
     <!-- Transactions -->
@@ -65,6 +65,7 @@
             <flux:navlist.item icon="list-bullet" href="#">Category</flux:navlist.item>
             <flux:navlist.item icon="cube" href="#">Product</flux:navlist.item>
             <flux:navlist.item icon="truck" href="#">Supplier</flux:navlist.item>
+            <flux:navlist.item icon="users" href="{{ route('customers.list') }}">Customer</flux:navlist.item>
         </div>
     </flux:navlist.group>
 

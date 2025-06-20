@@ -18,10 +18,10 @@ class Customer extends Component
     public $email;
     public $search;
     public $phone;
+    public $editCustomerId;
+    public $editCustomerName;
 
-    public function export(){
-        return Excel::download(new CustomerExport, 'customer.xlsx');
-    }
+
 
     public function render()
     {
@@ -37,6 +37,39 @@ class Customer extends Component
             'customers_count' => $customerCount
         ]);
     }
+
+    public function edit($editid){
+        $this->editCustomerId =  $editid;
+        $this->editCustomerName = CustomerModel::find($editid)->name;
+
+        // $customer->name;
+        // $customer->update();
+
+
+
+    }
+    public function save(){
+        $customer = CustomerModel::find($this->editCustomerId);
+
+        $customer->update([
+            'name'=>$this->editCustomerName
+        ]);
+
+        $this->reset(['editCustomerId']);
+
+    }
+
+
+    public function delete(CustomerModel $customerObj){
+        $customerObj->delete();
+
+    }
+
+    public function export(){
+        return Excel::download(new CustomerExport, 'customer.xlsx');
+    }
+
+
 
     public function updatedSearch()
     {
