@@ -63,9 +63,9 @@
             style="max-height: {{ $openGroups['inventory'] ? '500px' : '0' }};"
         >
             <flux:navlist.item icon="list-bullet" href="#">Category</flux:navlist.item>
-            <flux:navlist.item icon="cube" href="#">Product</flux:navlist.item>
+            <flux:navlist.item icon="cube" href="{{ route('products.create') }}">Products</flux:navlist.item>
             <flux:navlist.item icon="truck" href="#">Supplier</flux:navlist.item>
-            <flux:navlist.item icon="users" href="{{ route('customers.list') }}">Customer</flux:navlist.item>
+            <flux:navlist.item icon="users" href="{{ route('customers.list') }}">Customers</flux:navlist.item>
         </div>
     </flux:navlist.group>
 
