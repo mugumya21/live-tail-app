@@ -21,6 +21,7 @@
                     type="text"
                     placeholder="Enter Code"
                     required />
+              
 
                 <!-- Image -->
                 <flux:input
@@ -30,6 +31,12 @@
                 wire:model="product_image"
                 placeholder=''
                 required />
+
+                @if($product_image)
+
+                <img class="w-10 h-10 rounded mt-5 block"  src="{{ $product_image->temporaryUrl() }}"/>
+
+                @endif
 
 
                 <!-- Submit Button -->

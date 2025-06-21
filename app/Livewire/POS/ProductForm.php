@@ -19,6 +19,8 @@ class ProductForm extends Component
     public $product_name;
     public $product_code;
     public $product_image;
+    public $category_id = 1;
+    public $supplier_id = 1;
     public $search;
     public $editProductId;
     public $editProductName;
@@ -82,17 +84,21 @@ class ProductForm extends Component
 
                 'product_name'=>'required|min:5|string',
                 'product_code'=>'unique:products|numeric',
-                'product_image'=>'required|max:200|image',
+                'product_image'=>'required|max:1200|image',
+                'category_id'=>'required|numeric',
+                'supplier_id'=>'required|numeric',
             ]
 
         );
+
         DB::transaction(function() use (&$validated){
 
+            $validated['product_image'] = $this->product_image->store('uploads','public');
             $product = Product::create($validated);
 
         });
 
-        $this->reset(['product_name', 'product_code', 'product_image']);
+        $this->reset(['product_name', 'product_code', 'product_image', 'category_id', 'supplier_id']);
         flash()->success('Product created successfully');
     }
 

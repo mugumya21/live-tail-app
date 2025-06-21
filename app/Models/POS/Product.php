@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
 {
-     public $fillable = ['product_name' , 'product_code', 'product_image'];
+     public $fillable = ['product_name' , 'product_code', 'product_image', 'supplier_id', 'category_id'];
 
         //   $table->string('product_name');
         //     $table->integer('category_id');
