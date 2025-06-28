@@ -23,6 +23,7 @@ class Customer extends Component
 
 
 
+
     public function render()
     {
         $customers = CustomerModel::where('name', 'like', "%{$this->search}%")->paginate(2);
@@ -61,7 +62,14 @@ class Customer extends Component
 
 
     public function delete(CustomerModel $customerObj){
-        $customerObj->delete();
+        // check for role permission
+        if (!auth()->user()->can('delete_customer')) {
+            flash()->error('You do not have permission to delete this customer.');
+            return;
+        }else {
+            $customerObj->delete();
+            flash()->success('Customer deleted successfully');
+        }
 
     }
 
