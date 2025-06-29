@@ -63,6 +63,10 @@
             </div>
 
             </search>
+            <!-- check permission -->
+            @if (auth()->user()->hasPermissionTo('view_customer'))
+
+
             @forelse ($customers as $customer)
             <div  wire:key="customer{{ $customer->id }}" class="grid grid-cols-2 p-4 border border-zinc-200 dark:border-zinc-700 rounded-md">
                 <div class="">
@@ -100,6 +104,7 @@
             @empty
                 <p class="text-gray-500 dark:text-gray-400">No Customer found</p>
             @endforelse
+              @endif
             <div class="mt-2">
                             {{ $customers->links()}}
 

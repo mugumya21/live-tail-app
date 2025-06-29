@@ -127,6 +127,7 @@
         >
             <flux:navlist.item icon="chart-bar" href="#">Report</flux:navlist.item>
             <flux:navlist.item icon="users" href="#">User</flux:navlist.item>
+            <flux:navlist.item icon="link-slash" href="{{ route('roles.create') }}">Roles/Permissions</flux:navlist.item>
             <flux:navlist.item icon="cog" href="#">Settings</flux:navlist.item>
         </div>
     </flux:navlist.group>

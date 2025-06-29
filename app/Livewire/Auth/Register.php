@@ -35,6 +35,7 @@ class Register extends Component
         $validated['password'] = Hash::make($validated['password']);
 
         event(new Registered(($user = User::create($validated))));
+        $user->roles()->attach($role = \App\Models\Role::where('name', 'Admin')->first());
 
         Auth::login($user);
 

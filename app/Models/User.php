@@ -59,5 +59,35 @@ class User extends Authenticatable
             ->implode('');
     }
 
-  
+    public function roles()
+    {
+        return $this->morphToMany(Role::class, 'model', 'model_has_roles');
+    }
+
+    public function hasRole($role)
+    {
+        if (is_string($role)) {
+            return $this->roles->contains('name', $role);
+        }
+
+        return !! $role->intersect($this->roles)->count();
+    }
+
+    public function hasPermissionTo($permission)
+    {
+        return $this->hasPermissionThroughRole($permission);
+    }
+
+    protected function hasPermissionThroughRole($permission)
+    {
+        foreach ($this->roles as $role) {
+            if ($role->permissions->contains('name', $permission)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
+
 }
